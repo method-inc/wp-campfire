@@ -2,7 +2,7 @@
 Contributors: skookum, mjar81
 Tags: basecamp, campfire, notification, chat
 Requires at least: 3.0
-Tested up to: 3.0.2
+Tested up to: 3.1.2
 Stable tag: 0.1.1
 
 Notify your coworkers about a new blog post through the Basecamp Campfire group-chat service.
