@@ -35,6 +35,10 @@ Written by Mark Rickert - http://www.ear-fung.us/
 
 == Changelog ==
 
+= 0.1.1 =
+* Code formatting updates
+* Updated compatability to WP 3.1.2
+
 = 0.1 =
 * Initial public release
 
