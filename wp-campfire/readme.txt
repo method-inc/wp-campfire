@@ -11,6 +11,8 @@ Notify your coworkers about a new blog post through the Basecamp Campfire group-
 
 Notify everyone in a specified Campfire chat room when you publish a blog post. This would mainly be used for companies whose employees hang around in the chat room all day, but don't necessarily check the website.
 
+This plugin requires cURL support on your WordPress server.
+
 Provided by Skookum - http://skookum.com/
 Written by Mark Rickert - http://www.ear-fung.us/
 
@@ -21,7 +23,7 @@ Written by Mark Rickert - http://www.ear-fung.us/
 1. Go to the WP-Campfire settings page through the 'Settings' menu in Wordpress.
 1. Enter your Campfire subdomain URL.
 1. Enter your Campfire API key (instructions on finding this are on the settings page).
-1. Enter the Room ID you'd like to announce to.
+1. Enter the Room ID you'd like to announce to. To get your room ID, login to your Campfire room and look in the address bar (after /room).
 1. Enter or modify the Text Pattern you would like to use (a default text pattern is provided).
 1. Save your changes
 1. From now on, in the edit post screen, there will be a meta box in the right column. The default is to announce when the post is published. You can turn it off on a per-post basis.

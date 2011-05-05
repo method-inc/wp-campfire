@@ -27,15 +27,19 @@ Copyright 2010  Skookum  (email : info@skookum.com)
 add_action('admin_menu', 'wpcampfire_menu');
 add_action('publish_post', 'wpcampfire_notify_campfire', 99);
 
-function wpcampfire_menu() {
+function wpcampfire_menu()
+{
 	add_options_page('WP-Campfire Options', 'WP-Campfire', 'manage_options', 'wp-campfire', 'wpcampfire_options');
-	if(function_exists('curl_exec')) {
+
+	if(function_exists('curl_exec'))
+	{
 		add_action( 'admin_init', 'register_wpcampfiresettings' );
 		add_action( 'admin_init', 'wpcampfire_add_meta_box');
 	}
 }
 
-function wpcampfire_notify_campfire($post_id) {
+function wpcampfire_notify_campfire($post_id)
+{
 	// this is only called on the publish_post hook
 	if (get_option('wpcampfire_emable_option', 1) == 0
 		|| $post_id == 0
@@ -47,17 +51,14 @@ function wpcampfire_notify_campfire($post_id) {
 	$post = get_post($post_id);
 
 	// check for private posts
-	if ($post->post_status == 'private') {
-		return;
-	}
+	if ($post->post_status == 'private') return;
 	
 	//Send the notification to the campfire room.
 	include('icecube.class.php');
 	
-	$wpcampfire_url = 'https://' . get_option('wpcampfire_url') . '.campfirenow.com';	// Use full URL, http://[account].campfirenow.com
+	$wpcampfire_url = 'https://' . get_option('wpcampfire_url') . '.campfirenow.com';
 	$wpcampfire_authtoken = get_option('wpcampfire_api_key');
-	
-	$wpcampfire_room_id = get_option('wpcampfire_room_id');	// To get room_id, login to your CF room and look in the address bar (after /room)
+	$wpcampfire_room_id = get_option('wpcampfire_room_id');
 	
 	$userdata = get_userdata($post->post_author);
 	$wpcampfire_author = $userdata->display_name;
@@ -74,18 +75,20 @@ function wpcampfire_notify_campfire($post_id) {
 	add_post_meta($post_id, 'wpcampfire_sent', '1', true);
 }
 
-function register_wpcampfiresettings() {
+function register_wpcampfiresettings()
+{
 	register_setting( 'wpcampfire-settings', 'wpcampfire_url' );
 	register_setting( 'wpcampfire-settings', 'wpcampfire_api_key' );
 	register_setting( 'wpcampfire-settings', 'wpcampfire_room_id' );
 	register_setting( 'wpcampfire-settings', 'wpcampfire_text_pattern' );	
 }
 
-function wpcampfire_options() {
-
-  if (!current_user_can('manage_options'))  {
-    wp_die( __('You do not have sufficient permissions to access this page.') );
-  }
+function wpcampfire_options()
+{
+	if (!current_user_can('manage_options'))
+	{
+		wp_die( __('You do not have sufficient permissions to access this page.') );
+	}
 ?>
 <div class="wrap">
 	<h2>
@@ -141,7 +144,7 @@ function wpcampfire_options() {
 		</div>
 	<?php } ?>
 	<div class="attribution">
-		<small>The "Campfire" logo and name are copyright &copy;1999-2010 <a href="http://37signals.com/" target="_blank" rel="nofollow">37signals, LLC</a>.</small>
+		<small>The "Campfire" logo and name are trademarks of <a href="http://37signals.com/" target="_blank" rel="nofollow">37signals, LLC</a>.</small>
 	</div>
 </div>
 
@@ -169,27 +172,33 @@ function wpcampfire_add_meta_box()
 function wpcampfire_store_post_options($post_id, $post = false)
 {
 	$post = get_post($post_id);
-	if (!$post || $post->post_type == 'revision') {
+
+	if (!$post || $post->post_type == 'revision')
 		return;
-	}
 
 	$notify_meta = get_post_meta($post_id, 'wpcampfire_send', true);
 	$posted_meta = $_POST['wpcampfire_send'];
 
 	$save = false;
-	if (!empty($posted_meta)) {
+	if (!empty($posted_meta))
+	{
 		$posted_meta == 'yes' ? $meta = 'yes' : $meta = 'no';
 		$save = true;
 	}
-	else if (empty($notify_meta)) {
+	else if (empty($notify_meta))
+	{
 		get_option('wpcampfire_emable_option', 1) ? $meta = 'yes' : $meta = 'no';
 		$save = true;
 	}
 	
-	if ($save) {
+	if ($save)
+	{
 		update_post_meta($post_id, 'wpcampfire_send', $meta);
 	}
 }
+
 add_action('draft_post', 'wpcampfire_store_post_options', 1, 2);
 add_action('publish_post', 'wpcampfire_store_post_options', 1, 2);
 add_action('save_post', 'wpcampfire_store_post_options', 1, 2);
+
+?>
